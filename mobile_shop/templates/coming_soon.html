@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}در حال توسعه | فروشگاه لوازم جانبی موبایل{% endblock %}
+
+{% block content %}
+
+<div class="development-page">
+    <div class="container">
+        <div class="development-content">
+            <div class="development-icon">🚧</div>
+            <h1>این بخش در حال توسعه است</h1>
+            <p>ما در حال اضافه کردن قابلیت‌های جدید به فروشگاه هستیم</p>
+            
+            <div class="development-features">
+                <div class="dev-feature">
+                    <span class="dev-icon">🛒</span>
+                    <span>سبد خرید پیشرفته</span>
+                </div>
+                <div class="dev-feature">
+                    <span class="dev-icon">💳</span>
+                    <span>درگاه پرداخت آنلاین</span>
+                </div>
+                <div class="dev-feature">
+                    <span class="dev-icon">👤</span>
+                    <span>پنل کاربری اختصاصی</span>
+                </div>
+                <div class="dev-feature">
+                    <span class="dev-icon">📦</span>
+                    <span>سیستم پیگیری سفارش</span>
+                </div>
+            </div>
+            
+            <div class="development-timer">
+                <div class="timer-box">
+                    <span class="timer-number" id="days">00</span>
+                    <span class="timer-label">روز</span>
+                </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="hours">00</span>
+                    <span class="timer-label">ساعت</span>
+                </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="minutes">00</span>
+                    <span class="timer-label">دقیقه</span>
+                </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="seconds">00</span>
+                    <span class="timer-label">ثانیه</span>
+                </div>
+            </div>
+            
+            <p class="development-note">برای اطلاع از جدیدترین محصولات و تخفیف‌ها، ما را در شبکه‌های اجتماعی دنبال کنید</p>
+            
+            <div class="development-social">
+                <a href="#" class="social-link">📷 اینستاگرام</a>
+                <a href="#" class="social-link">💬 تلگرام</a>
+                <a href="#" class="social-link">📱 واتساپ</a>
+            </div>
+            
+            <a href="/" class="btn-back-home">🏠 بازگشت به صفحه اصلی</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // تایمر شمارش معکوس به سمت تاریخ انتشار (۳۰ روز بعد)
+    function startCountdown() {
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 30); // ۳۰ روز بعد
+        
+        function updateTimer() {
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '۰۰';
+                document.getElementById('hours').textContent = '۰۰';
+                document.getElementById('minutes').textContent = '۰۰';
+                document.getElementById('seconds').textContent = '۰۰';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+    
+    startCountdown();
+</script>
+
+{% endblock %}

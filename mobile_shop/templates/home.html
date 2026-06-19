@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}فروشگاه لوازم جانبی موبایل | بهترین قیمت و تنوع{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- بنر اصلی بالای صفحه -->
+    <div class="main-banner">
+        <div class="banner-content">
+            <h1>بهترین لوازم جانبی موبایل</h1>
+            <p>تنوع بالا • قیمت عالی • گارانتی اصالت</p>
+            <div class="banner-stats">
+                <div class="stat">
+                    <span class="stat-number">۱۰+</span>
+                    <span class="stat-label">محصول</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">۵۰+</span>
+                    <span class="stat-label">مشتری راضی</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">۲۴ ساعته</span>
+                    <span class="stat-label">پشتیبانی</span>
+                </div>
+            </div>
+            <a href="/products/" class="banner-btn">شروع خرید</a>
+        </div>
+        
+    </div>
+
+    <!-- دسته‌بندی محصولات -->
+    <section class="home-categories">
+        <h2 class="section-title">📂 دسته‌بندی محصولات</h2>
+        <div class="category-grid">
+            {% for category in categories %}
+            <div class="category-item">
+                <div class="category-icon">
+                    {% if category.name == "قاب موبایل" %}📱
+                    {% elif category.name == "گلس محافظ" %}🛡️
+                    {% elif category.name == "شارژر و کابل" %}🔌
+                    {% elif category.name == "هدفون و هدست" %}🎧
+                    {% elif category.name == "پاور بانک" %}🔋
+                    {% else %}📦
+                    {% endif %}
+                </div>
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.products.count }} محصول</p>
+                <a href="/products/?category={{ category.slug }}" class="category-link">مشاهده ←</a>
+            </div>
+            {% empty %}
+                <p class="empty-message">دسته‌بندی وجود ندارد. لطفاً از پنل ادمین دسته‌بندی بسازید.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- محصولات ویژه -->
+    <section class="featured-products">
+        <h2 class="section-title">⭐ محصولات ویژه و پرفروش</h2>
+        <div class="products-grid">
+            {% for product in featured_products %}
+            <div class="product-card">
+                <div class="product-badge">ویژه</div>
+                {% if product.discount_percent > 0 %}
+                <div class="discount-badge">{{ product.discount_percent }}% تخفیف</div>
+                {% endif %}
+                <div class="product-image">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <h3>{{ product.name|truncatechars:35 }}</h3>
+                <div class="product-price">
+                    {% if product.discount_percent > 0 %}
+                        <span class="old-price">{{ product.price|floatformat:0 }} تومان</span>
+                        <span class="new-price">{{ product.final_price|floatformat:0 }} تومان</span>
+                    {% else %}
+                        <span class="new-price">{{ product.price|floatformat:0 }} تومان</span>
+                    {% endif %}
+                </div>
+                <div class="product-actions">
+                    <a href="/product/{{ product.slug }}/" class="btn-view">مشاهده جزئیات</a>
+                    <a href="/add-to-cart/{{ product.id }}/" class="btn-add">🛒 افزودن به سبد</a>
+                </div>
+            </div>
+            {% empty %}
+                <p class="empty-message">محصولی وجود ندارد. لطفاً از پنل ادمین محصول بسازید.</p>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- ویژگی‌های فروشگاه -->
+    <div class="features-section">
+        <div class="feature-box">
+            <div class="feature-icon">🚚</div>
+            <h4>ارسال رایگان</h4>
+            <p>بالای ۵۰۰ هزار تومان</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">✅</div>
+            <h4>ضمانت اصالت</h4>
+            <p>کالاهای ۱۰۰٪ اورجینال</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">🔄</div>
+            <h4>بازگشت ۷ روزه</h4>
+            <p>ضمانت تعویض کالا</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">💬</div>
+            <h4>پشتیبانی ۲۴/۷</h4>
+            <p>واتساپ و تلگرام</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">🎁</div>
+            <h4>هدیه ویژه</h4>
+            <p>به ازای هر خرید</p>
+        </div>
+        <div class="feature-box">
+            <div class="feature-icon">🔒</div>
+            <h4>پرداخت امن</h4>
+            <p>ضمانت بازگشت وجه</p>
+        </div>
+    </div>
+
+    <!-- محصولات جدید -->
+    <section class="new-products">
+        <h2 class="section-title">🆕 جدیدترین محصولات</h2>
+        <div class="products-grid">
+            {% for product in latest_products %}
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <h3>{{ product.name|truncatechars:35 }}</h3>
+                <div class="product-price">
+                    <span class="new-price">{{ product.final_price|floatformat:0 }} تومان</span>
+                </div>
+                <a href="/product/{{ product.slug }}/" class="btn-view">مشاهده جزئیات</a>
+            </div>
+            {% empty %}
+                <p class="empty-message">محصول جدیدی وجود ندارد</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- بنر پایین صفحه -->
+    <div class="bottom-banner">
+        <div class="bottom-banner-content">
+            <h3>تخفیف ویژه برای اعضای جدید</h3>
+            <p>با ثبت‌نام در باشگاه مشتریان، ۲۰٪ تخفیف بگیرید</p>
+            <a href={% url 'coming_soon'%} class="bottom-banner-btn">عضویت در باشگاه مشتریان</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

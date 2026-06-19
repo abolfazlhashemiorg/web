@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}درباره ما | فروشگاه لوازم جانبی موبایل{% endblock %}
+
+{% block content %}
+
+<div class="about-page">
+    <div class="container">
+        <div class="about-header">
+            <h1>📱 درباره ما</h1>
+            <p>آشنایی با فروشگاه لوازم جانبی موبایل</p>
+        </div>
+
+        
+            <div class="about-section">
+                <div class="about-section">
+                     <h2>🤝 داستان ما</h2>
+                     <p style="line-height: 2; font-size: 16px;">
+                         <strong>سلام! من سید ابوالفضل هاشمی هستم</strong>، دانشجوی رشته مهندسی نرم‌افزار در دانشکده ملی مهارت اراک (امیرکبیر). 
+                         این فروشگاه، حاصل تلاش و یادگیری من در مسیر برنامه‌نویسی وب است و به عنوان <strong>پروژه پایانی درس طراحی وب</strong> 
+                         با راهنمایی استاد ارجمند، <strong>جناب آقای ده‌مولایی</strong>، طراحی و پیاده‌سازی شده است.
+                     </p>
+                     <p style="line-height: 2; font-size: 16px; margin-top: 15px;">
+                         با عشق به دنیای کدنویسی و علاقه به خلق تجربه‌های کاربری لذت‌بخش، تصمیم گرفتم یک فروشگاه اینترنتی کامل طراحی کنم 
+                         که در آن مشتریان بتوانند به راحتی لوازم جانبی مورد نیاز خود را پیدا کرده و خریداری کنند. 
+                         اگرچه تسلط نسبی به پایتون و جنگو دارم، اما این پروژه فرصتی بود تا دانش خود را در عمل به کار بگیرم 
+                         و با چالش‌های دنیای واقعی توسعه وب آشنا شوم.
+                     </p>
+                     <p style="line-height: 2; font-size: 16px; margin-top: 15px;">
+                         فروشگاه <strong>لوازم جانبی موبایل</strong> با هدف ارائه تنوع بالا، اصالت کالا و قیمت رقابتی ساخته شده است. 
+                         امیدوارم از دیدن آن لذت ببرید و نظرات ارزشمندتان را با من به اشتراک بگذارید. 
+                         این تازه شروع کار من است و قصد دارم در آینده امکانات بیشتری مانند درگاه پرداخت آنلاین، 
+                         پنل کاربری اختصاصی و سیستم باشگاه مشتریان را به آن اضافه کنم.
+                     </p>
+                     <p style="line-height: 2; font-size: 16px; margin-top: 20px; color: #6366F1; font-weight: bold;">
+                         از همراهی و حمایت شما سپاسگزارم! 🌱🚀
+                     </p>
+                
+                
+                  
+            </div>
+
+            <div class="about-section">
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">👨‍💼</div>
+                        <h4>مدیر فروشگاه</h4>
+                        <p>با ۱۰ سال تجربه در حوزه لوازم جانبی</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">👩‍💻</div>
+                        <h4>تیم پشتیبانی</h4>
+                        <p>پاسخگویی ۲۴/۷ در واتساپ و تلگرام</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">📦</div>
+                        <h4>تیم ارسال</h4>
+                        <p>ارسال سریع با پست پیشتاز</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>📞 ارتباط با ما</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <span>09105458152</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>09105458152</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️</span>
+                        <span style=font-size:15px>abolfazlhashemiorg@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>مرکزی,اراک.....</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.about-page {
+    padding: 40px 0;
+    }
+.about-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.about-header h1 {
+    font-size: 36px;
+    color: #1F2937;
+}
+.about-header p {
+    color: #6B7280;
+    font-size: 18px;
+}
+.about-section {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.about-section h2 {
+    margin-bottom: 20px;
+    color: #1F2937;
+    font-size: 24px;
+}
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.value-item {
+    text-align: center;
+    padding: 20px;
+    background: #F9FAFB;
+    border-radius: 15px;
+}
+.value-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+}
+.value-item h4 {
+    margin-bottom: 8px;
+    color: #1F2937;
+}
+.value-item p {
+    color: #6B7280;
+    font-size: 14px;
+}
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.team-member {
+    text-align: center;
+    padding: 20px;
+    background: #F9FAFB;
+    border-radius: 15px;
+}
+.member-avatar {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+.team-member h4 {
+    color: #1F2937;
+}
+.team-member p {
+    color: #6B7280;
+    font-size: 14px;
+}
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: #F9FAFB;
+    border-radius: 12px;
+}
+.contact-item span:first-child {
+    font-size: 24px;
+}
+@media (max-width: 768px) {
+    .about-header h1 {
+        font-size: 26px;
+    }
+    .values-grid, .team-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
+{% endblock %}

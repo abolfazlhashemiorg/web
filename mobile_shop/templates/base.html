@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}فروشگاه لوازم جانبی موبایل{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="logo"><a href="/">📱 لوازم جانبی موبایل</a></div>
+        <nav>
+            <ul>
+                <li><a href="/">خانه</a></li>
+                <li><a href="/products/">محصولات</a></li>
+                <li><a href="/about/">درباره ما</a></li>  <!-- این خط رو اضافه کن -->
+            </ul>
+        </nav>
+        
+        </div>
+    </div>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer><div class="container"><p>© 2026 فروشگاه لوازم جانبی موبایل</p></div></footer>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

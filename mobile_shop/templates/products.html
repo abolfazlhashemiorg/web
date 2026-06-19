@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}محصولات | فروشگاه لوازم جانبی موبایل{% endblock %}
+
+{% block content %}
+<div class="container products-page">
+    <h1>🛍️ همه محصولات</h1>
+    
+    <!-- فیلترها -->
+    <div class="filters-section">
+        <form method="get">
+            <input type="text" name="search" placeholder="جستجوی محصول..." value="{{ request.GET.search }}">
+            <select name="category">
+                <option value="">همه دسته‌ها</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">🔍 جستجو</button>
+        </form>
+    </div>
+    
+    <!-- تعداد محصولات -->
+    <p style="color: #6B7280; margin-bottom: 20px;">
+        {{ products|length }} محصول یافت شد
+    </p>
+    
+    <!-- محصولات -->
+    <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <div class="product-badge">ویژه</div>
+            {% if product.discount_percent > 0 %}
+            <div class="discount-badge">{{ product.discount_percent }}%</div>
+            {% endif %}
+            
+            <div class="product-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            
+            <h3>{{ product.name|truncatechars:35 }}</h3>
+            
+            <div class="product-price">
+                {% if product.discount_percent > 0 %}
+                    <span class="old-price">{{ product.price|floatformat:0 }} تومان</span>
+                    <span class="new-price">{{ product.final_price|floatformat:0 }} تومان</span>
+                {% else %}
+                    <span class="new-price">{{ product.price|floatformat:0 }} تومان</span>
+                {% endif %}
+            </div>
+            
+            <div class="product-actions">
+                <a href="/product/{{ product.slug }}/" class="btn-view">مشاهده</a>
+                <a href="/add-to-cart/{{ product.id }}/" class="btn-add">🛒 افزودن</a>
+            </div>
+        </div>
+        {% empty %}
+            <p class="empty-message">محصولی با این مشخصات یافت نشد</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

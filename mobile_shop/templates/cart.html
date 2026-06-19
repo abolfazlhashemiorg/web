@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>سبد خرید</h1>
+    {% if cart and cart.items.all %}
+        {% for item in cart.items.all %}
+        <div>{{ item.product.name }} - تعداد: {{ item.quantity }} - قیمت: {{ item.product.final_price }}</div>
+        {% endfor %}
+        <a href="/checkout/" class="btn-primary">تسویه حساب</a>
+    {% else %}
+        <p>سبد خرید خالی است</p>
+    {% endif %}
+</div>
+{% endblock %}
