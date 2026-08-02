@@ -7,24 +7,60 @@
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-<header>
-    <div class="container">
-        <div class="logo"><a href="/">📱 لوازم جانبی موبایل</a></div>
-        <nav>
-            <ul>
-                <li><a href="/">خانه</a></li>
-                <li><a href="/products/">محصولات</a></li>
-                <li><a href="/about/">درباره ما</a></li>  <!-- این خط رو اضافه کن -->
-            </ul>
-        </nav>
-        
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="/">📱 لوازم جانبی</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">خانه</a></li>
+                    <li><a href="/products/">محصولات</a></li>
+                    <li><a href="/about/">درباره ما</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="/cart/" class="cart-icon">🛒</a>
+                {% if user.is_authenticated %}
+                    <a href="/accounts/profile/">👤 {{ user.first_name|default:user.username }}</a>
+                    <a href="/accounts/logout/">🚪 خروج</a>
+                {% else %}
+                    <a href="/accounts/login/">ورود</a>
+                    <a href="/accounts/register/">ثبت‌نام</a>
+                {% endif %}
+            </div>
         </div>
-    </div>
-</header>
-<main>{% block content %}{% endblock %}</main>
-<footer><div class="container"><p>© 2026 فروشگاه لوازم جانبی موبایل</p></div></footer>
-<script src="{% static 'js/main.js' %}"></script>
+    </header>
+
+    {% if messages %}
+        <div class="container" style="margin-top: 20px;">
+            {% for message in messages %}
+                <div style="padding: 12px 20px; border-radius: 12px; margin: 10px 0; 
+                    {% if message.tags == 'success' %}background: #D1FAE5; color: #065F46; border-right: 4px solid #10B981;
+                    {% elif message.tags == 'error' %}background: #FEE2E2; color: #991B1B; border-right: 4px solid #EF4444;
+                    {% elif message.tags == 'warning' %}background: #FEF3C7; color: #92400E; border-right: 4px solid #F59E0B;
+                    {% else %}background: #E0E7FF; color: #3730A3; border-right: 4px solid #6366F1;{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© ۲۰۲۴ فروشگاه لوازم جانبی موبایل</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

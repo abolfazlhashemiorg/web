@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}پروفایل | فروشگاه لوازم جانبی موبایل{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 0;">
+    <h2 style="text-align: center; margin-bottom: 30px; color: #1F2937;">👤 پروفایل کاربری</h2>
+    
+    <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div>
+                <span style="color: #6B7280; font-size: 14px;">نام</span>
+                <p style="font-weight: 600; margin-top: 4px;">{{ user.first_name|default:"وارد نشده" }}</p>
+            </div>
+            <div>
+                <span style="color: #6B7280; font-size: 14px;">نام خانوادگی</span>
+                <p style="font-weight: 600; margin-top: 4px;">{{ user.last_name|default:"وارد نشده" }}</p>
+            </div>
+            <div>
+                <span style="color: #6B7280; font-size: 14px;">نام کاربری</span>
+                <p style="font-weight: 600; margin-top: 4px;">{{ user.username }}</p>
+            </div>
+            <div>
+                <span style="color: #6B7280; font-size: 14px;">ایمیل</span>
+                <p style="font-weight: 600; margin-top: 4px;">{{ user.email|default:"وارد نشده" }}</p>
+            </div>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/accounts/logout/" style="background: #EF4444; color: white; padding: 8px 20px; border-radius: 30px; text-decoration: none;">🚪 خروج از حساب</a>
+        </div>
+    </div>
+    
+    <h3 style="margin: 30px 0 20px; color: #1F2937;">📦 سفارش‌های قبلی</h3>
+    
+    {% if orders %}
+        {% for order in orders %}
+        <div style="background: white; padding: 18px 22px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <strong style="color: #1F2937;">سفارش #{{ order.id }}</strong>
+                <span style="color: #6B7280; font-size: 14px; margin-right: 15px;">{{ order.created_at|date:"Y/m/d - H:i" }}</span>
+            </div>
+            <div>
+                <span style="font-weight: 600; color: #EF4444;">{{ order.total_price }} تومان</span>
+                <span style="background: 
+                    {% if order.status == 'pending' %}#FEF3C7; color: #92400E;
+                    {% elif order.status == 'paid' %}#D1FAE5; color: #065F46;
+                    {% elif order.status == 'shipped' %}#DBEAFE; color: #1E40AF;
+                    {% elif order.status == 'delivered' %}#E0E7FF; color: #3730A3;
+                    {% else %}#F3F4F6; color: #374151;{% endif %}
+                    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 10px;">
+                    {% if order.status == 'pending' %}در انتظار پرداخت
+                    {% elif order.status == 'paid' %}پرداخت شده
+                    {% elif order.status == 'shipped' %}ارسال شده
+                    {% elif order.status == 'delivered' %}تحویل داده شده
+                    {% else %}{{ order.status }}{% endif %}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <p style="color: #6B7280; font-size: 16px;">🛒 هنوز سفارشی ثبت نکرده‌اید.</p>
+            <a href="/products/" style="display: inline-block; margin-top: 15px; background: #6366F1; color: white; padding: 10px 25px; border-radius: 30px; text-decoration: none;">مشاهده محصولات</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
