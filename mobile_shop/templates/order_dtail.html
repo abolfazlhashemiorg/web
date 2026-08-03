@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}جزئیات سفارش #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 0;">
+    <h2 style="text-align: center; margin-bottom: 30px;">🧾 جزئیات سفارش #{{ order.id }}</h2>
+    
+    <div style="max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+        
+        <!-- وضعیت سفارش -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #F3F4F6;">
+            <div>
+                <span style="color: #6B7280;">تاریخ ثبت:</span>
+                <strong>{{ order.created_at|date:"Y/m/d - H:i" }}</strong>
+            </div>
+            <div>
+                <span style="background: 
+                    {% if order.status == 'pending' %}#FEF3C7; color: #92400E;
+                    {% elif order.status == 'paid' %}#D1FAE5; color: #065F46;
+                    {% elif order.status == 'shipped' %}#DBEAFE; color: #1E40AF;
+                    {% elif order.status == 'delivered' %}#E0E7FF; color: #3730A3;
+                    {% else %}#F3F4F6; color: #374151;{% endif %}
+                    padding: 6px 16px; border-radius: 20px; font-weight: 600;">
+                    {% if order.status == 'pending' %}⏳ در انتظار پرداخت
+                    {% elif order.status == 'paid' %}✅ پرداخت شده
+                    {% elif order.status == 'shipped' %}📦 ارسال شده
+                    {% elif order.status == 'delivered' %}🎯 تحویل داده شده
+                    {% else %}{{ order.get_status_display }}{% endif %}
+                </span>
+            </div>
+        </div>
+        
+        <!-- اطلاعات مشتری -->
+        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #E5E7EB;">
+            <h4 style="margin-bottom: 10px;">👤 اطلاعات مشتری</h4>
+            <p><strong>نام:</strong> {{ order.full_name }}</p>
+            <p><strong>شماره تماس:</strong> {{ order.phone }}</p>
+            <p><strong>آدرس:</strong> {{ order.address }}</p>
+        </div>
+        
+        <!-- آیتم‌های سفارش -->
+        <h4 style="margin-bottom: 15px;">📦 محصولات سفارش</h4>
+        <div style="margin-bottom: 20px;">
+            {% for item in items %}
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #E5E7EB;">
+                <div>
+                    <strong>{{ item.product_name }}</strong>
+                    <span style="color: #6B7280; font-size: 14px;"> x {{ item.quantity }}</span>
+                </div>
+                <span>{{ item.product_price|floatformat:0 }} تومان</span>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- جمع کل -->
+        <div style="display: flex; justify-content: space-between; padding-top: 15px; border-top: 2px solid #F3F4F6; font-weight: bold; font-size: 18px;">
+            <span>جمع کل:</span>
+            <span style="color: #EF4444;">{{ order.total_price|floatformat:0 }} تومان</span>
+        </div>
+        
+        <!-- دکمه بازگشت -->
+        <div style="text-align: center; margin-top: 25px;">
+            <a href="/accounts/profile/" style="background: #6366F1; color: white; padding: 10px 30px; border-radius: 30px; text-decoration: none;">⬅️ بازگشت به پروفایل</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

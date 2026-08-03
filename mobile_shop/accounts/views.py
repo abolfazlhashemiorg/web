@@ -6,9 +6,8 @@ from .forms import RegisterForm, LoginForm
 from shop.models import Order, Cart, CartItem
 
 def register_view(request):
-    """ثبت‌نام کاربر جدید"""
     if request.user.is_authenticated:
-        return redirect('/')  # استفاده از آدرس مستقیم
+        return redirect('/')
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -26,7 +25,6 @@ def register_view(request):
 
 
 def login_view(request):
-    """ورود کاربر"""
     if request.user.is_authenticated:
         return redirect('/')
 
@@ -69,7 +67,6 @@ def login_view(request):
 
 
 def logout_view(request):
-    """خروج کاربر"""
     logout(request)
     messages.success(request, 'با موفقیت خارج شدید.')
     return redirect('/')
@@ -77,6 +74,6 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    """پروفایل کاربر و نمایش سفارش‌ها"""
+    # دریافت سفارش‌های کاربر با آیتم‌های مرتبط (برای نمایش بهتر)
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'profile.html', {'orders': orders})

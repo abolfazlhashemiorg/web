@@ -4,177 +4,52 @@
 {% block title %}تسویه حساب | فروشگاه لوازم جانبی موبایل{% endblock %}
 
 {% block content %}
-<div class="container checkout-page">
-    <h1>🧾 تسویه حساب</h1>
-    <p class="checkout-notice">برای تکمیل خرید، فرم زیر را پر کنید</p>
+<div class="container" style="padding: 40px 0;">
+    <h2 style="text-align: center; margin-bottom: 30px;">🧾 تکمیل سفارش</h2>
     
-    <div class="checkout-wrapper">
-        <div class="checkout-form">
-            <form method="POST" action="{% url 'coming_soon' %}">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label>نام کامل</label>
-                    <input type="text" name="full_name" placeholder="مثلاً علی رضایی" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>شماره تماس</label>
-                    <input type="text" name="phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>آدرس</label>
-                    <textarea name="address" placeholder="آدرس کامل خود را وارد کنید" rows="4" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>کد تخفیف (اختیاری)</label>
-                    <input type="text" name="discount_code" placeholder="کد تخفیف خود را وارد کنید">
-                </div>
-                
-                <div class="checkout-summary">
-                    <div class="summary-row">
-                        <span>جمع کل:</span>
-                        <span>{{ final_total|default:0 }} تومان</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>هزینه ارسال:</span>
-                        <span>{% if shipping_free %}رایگان{% else %}۳۵,۰۰۰ تومان{% endif %}</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>قابل پرداخت:</span>
-                        <span>{{ final_total|default:0 }} تومان</span>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn-payment">💳 پرداخت و تکمیل خرید</button>
-            </form>
+    <div style="max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.08);">
+        
+        <!-- خلاصه سبد خرید -->
+        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #F3F4F6;">
+            <h3 style="margin-bottom: 15px;">🛒 خلاصه سفارش</h3>
+            {% for item in cart.items.all %}
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #E5E7EB;">
+                <span>{{ item.product.name }} ({{ item.quantity }})</span>
+                <span>{{ item.product.final_price|floatformat:0 }} تومان</span>
+            </div>
+            {% endfor %}
+            <div style="display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold; font-size: 18px;">
+                <span>جمع کل:</span>
+                <span style="color: #EF4444;">{{ total|floatformat:0 }} تومان</span>
+            </div>
         </div>
         
-        <div class="checkout-info">
-            <div class="info-box">
-                <h4>🚚 ارسال</h4>
-                <p>ارسال با پست پیشتاز طی ۲ تا ۳ روز کاری</p>
+        <!-- فرم تسویه حساب -->
+        <form method="post">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 600;">نام کامل</label>
+                <input type="text" name="full_name" value="{{ user.first_name|default:'' }}" required 
+                       style="width: 100%; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 12px;">
             </div>
-            <div class="info-box">
-                <h4>🔄 بازگشت کالا</h4>
-                <p>۷ روز ضمانت بازگشت کالا</p>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 600;">شماره تماس</label>
+                <input type="text" name="phone" value="{{ user.customer.phone|default:'' }}" required 
+                       style="width: 100%; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 12px;">
             </div>
-            <div class="info-box">
-                <h4>✅ گارانتی</h4>
-                <p>همه محصولات دارای گارانتی اصالت هستند</p>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 600;">آدرس</label>
+                <textarea name="address" rows="4" required 
+                          style="width: 100%; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 12px;">{{ user.customer.address|default:'' }}</textarea>
             </div>
-        </div>
+            
+            <button type="submit" style="width: 100%; background: #6366F1; color: white; padding: 14px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer;">
+                ✅ ثبت سفارش نهایی
+            </button>
+        </form>
     </div>
 </div>
-
-<style>
-.checkout-page {
-    padding: 40px 0;
-}
-.checkout-page h1 {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #1F2937;
-}
-.checkout-notice {
-    text-align: center;
-    color: #6B7280;
-    margin-bottom: 30px;
-}
-.checkout-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-}
-.checkout-form {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-.form-group {
-    margin-bottom: 20px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #1F2937;
-}
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #E5E7EB;
-    border-radius: 12px;
-    font-size: 14px;
-    font-family: 'Vazirmatn', sans-serif;
-}
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #6366F1;
-}
-.checkout-summary {
-    background: #F9FAFB;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px 0;
-}
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #E5E7EB;
-}
-.summary-row:last-child {
-    border-bottom: none;
-}
-.summary-row.total {
-    font-weight: bold;
-    font-size: 18px;
-    color: #EF4444;
-}
-.btn-payment {
-    width: 100%;
-    background: #6366F1;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-.btn-payment:hover {
-    background: #4F46E5;
-}
-.checkout-info {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.info-box {
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-.info-box h4 {
-    margin-bottom: 8px;
-    color: #1F2937;
-}
-.info-box p {
-    color: #6B7280;
-    font-size: 14px;
-}
-@media (max-width: 768px) {
-    .checkout-wrapper {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 {% endblock %}
