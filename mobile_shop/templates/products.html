@@ -7,19 +7,50 @@
 <div class="container products-page">
     <h1>🛍️ همه محصولات</h1>
     
-    <!-- فیلترها -->
+    <!-- ======== فیلترهای پیشرفته ======== -->
     <div class="filters-section">
-        <form method="get">
-            <input type="text" name="search" placeholder="جستجوی محصول..." value="{{ request.GET.search }}">
-            <select name="category">
-                <option value="">همه دسته‌ها</option>
-                {% for cat in categories %}
-                    <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %}selected{% endif %}>
-                        {{ cat.name }}
-                    </option>
-                {% endfor %}
-            </select>
-            <button type="submit">🔍 جستجو</button>
+        <form method="get" id="filterForm">
+            <div class="filter-row">
+                <!-- جستجو -->
+                <input type="text" name="search" placeholder="🔍 جستجوی محصول..." value="{{ search }}">
+                
+                <!-- دسته‌بندی -->
+                <select name="category">
+                    <option value="">همه دسته‌ها</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
+                            {{ cat.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <!-- برند -->
+                <select name="brand">
+                    <option value="">همه برندها</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand }}" {% if selected_brand == brand %}selected{% endif %}>
+                            {{ brand }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="filter-row">
+                <!-- محدوده قیمت -->
+                <input type="number" name="min_price" placeholder="قیمت از" value="{{ min_price }}" min="0">
+                <input type="number" name="max_price" placeholder="قیمت تا" value="{{ max_price }}" min="0">
+                
+                <!-- مرتب‌سازی -->
+                <select name="sort">
+                    <option value="">مرتب‌سازی</option>
+                    <option value="newest" {% if sort == 'newest' %}selected{% endif %}>جدیدترین</option>
+                    <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>قیمت (کم به زیاد)</option>
+                    <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>قیمت (زیاد به کم)</option>
+                </select>
+                
+                <button type="submit">🔍 اعمال فیلتر</button>
+                <a href="/products/" class="reset-btn">❌ حذف فیلترها</a>
+            </div>
         </form>
     </div>
     
@@ -28,7 +59,7 @@
         {{ products|length }} محصول یافت شد
     </p>
     
-    <!-- محصولات -->
+    <!-- ======== گرید محصولات ======== -->
     <div class="products-grid">
         {% for product in products %}
         <div class="product-card">

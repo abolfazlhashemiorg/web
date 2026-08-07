@@ -7,7 +7,7 @@ class Category(models.Model):
     image = models.ImageField(upload_to='categories/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class Product(models.Model):
@@ -29,8 +29,9 @@ class Product(models.Model):
     def final_price(self):
         return self.price * (100 - self.discount_percent) // 100
 
-    def str(self):
+    def __str__(self):
         return self.name
+   
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -58,7 +59,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def str(self):
+    def __str__(self):
         return f"سفارش #{self.id} - {self.full_name}"
 
 class OrderItem(models.Model):  # ← مدل جدید
@@ -68,5 +69,5 @@ class OrderItem(models.Model):  # ← مدل جدید
     product_price = models.IntegerField()  # قیمت لحظه ثبت
     quantity = models.IntegerField()
     
-    def str(self):
+    def __str__(self):
         return f"{self.product_name} x {self.quantity}"
