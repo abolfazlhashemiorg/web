@@ -26,5 +26,5 @@
 
 `bash
 git clone https://github.com/abolfazlhashemiorg/web
-cd mobile-shop
+cd mobile_shop
 
