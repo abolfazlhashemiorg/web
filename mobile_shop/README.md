@@ -15,7 +15,7 @@
 
 ## 🛠️ تکنولوژی‌ها
 
-- بک‌اند: Django 6.1 (Python)
+- بک‌اند: Django 6.0.6 (Python)
 - فرانت‌اند: HTML5, CSS3, JavaScript
 - دیتابیس: SQLite
 - مدیریت تصاویر: Pillow
